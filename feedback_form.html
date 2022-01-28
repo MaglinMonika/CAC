@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+
+</head>
+
+<body>
+    <br>
+    <h1>FEEDBACK FORM</h1>
+    <form id="form">
+        <div>
+            <small></small><br>
+            <input id="username" name="name" type="text" class="feedback-input" placeholder="Name"
+                onkeypress="return isLetter(event)" />
+        </div>
+        <div>
+            <small></small><br>
+            <input id="email" name="email" type="text" class="feedback-input" placeholder="Email" />
+        </div>
+        <div>
+            <small></small><br>
+            <textarea id="address" name="text" class="feedback-input" placeholder="Address"></textarea>
+        </div>
+        <div>
+            <small></small>
+            <h4 class="feedback-input" id="check">What you liked the most about the campus?<br><br>
+                <label class="container">Sports
+                    <input type="checkbox" class="feedback-input">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Location
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Campus
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Atmosphere
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Dorm Rooms
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Sports
+                    <input type="checkbox">
+                    <span class="checkmark"></span>
+                </label>
+            </h4>
+        </div>
+        <div>
+            <small></small>
+            <h4 class="feedback-input" id="radio">What interested you about this university?<br><br>
+                <label class="container">Friends
+                    <input type="radio" name="radio">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Television
+                    <input type="radio" name="radio">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Internet
+                    <input type="radio" name="radio">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="container">Others
+                    <input type="radio" name="radio">
+                    <span class="checkmark"></span>
+                </label>
+            </h4>
+        </div>
+        <div class="align-right">
+            <input class="inline" type="reset" value="RESET" />
+            <input class="inline" type="submit" value="SUBMIT" />
+        </div>
+    </form>
+</body>
+<script>
+    function isLetter(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if ((charCode > 64 && charCode < 91) || (charCode < 123 && charCode > 96))
+            return true;
+
+        return false;
+    }
+    const form = document.getElementById('form');
+    var email = document.getElementById('email');
+    var username = document.getElementById('username');
+    var address = document.getElementById('address');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+
+        checkInputs();
+    });
+
+
+
+    function checkInputs() {
+        // trim to remove the whitespaces
+        const usernameValue = username.value.trim();
+        const emailValue = email.value.trim();
+        const addressValue = address.value.trim();
+        const regex1 = /^([a-z0-9\.-]+)@(christuniversity)\.(in)$/;
+        const regex2 = /^([a-z0-9\.-]+)@([a-z0-9]+)\.(christuniversity)(.in)$/;
+
+
+      
+        if (emailValue === '') {
+            setErrorFor(email, '* required');
+        }
+        else     if (!regex1.test(email.value) && !regex2.test(email.value)) {
+            setErrorFor(email, '* invalid email');
+        }
+        else{
+            setSuccessFor(email);
+        }
+
+        if (usernameValue === '') {
+            setErrorFor(username, '* required');
+        }else{
+            setSuccessFor(username);
+        }
+        if (addressValue === '') {
+            setErrorFor(address, '* required');
+        }else{
+            setSuccessFor(address);
+        }
+     
+    }
+    function setErrorFor(input, message) {
+        const formControl = input.parentElement;
+        const small = formControl.querySelector('small');
+        formControl.className = 'error';
+        small.innerText = message;
+    }
+    function setSuccessFor(input) {
+        const formControl = input.parentElement;
+        formControl.className = 'success';
+    }
+</script>
+
+</html>
+<style>
+    @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
+    body {
+        background:  linear-gradient(rgba(0, 3, 50, 0.05), rgba(0, 0, 50, 0.5));
+    }
+
+    form {
+        max-width: 50%;
+        margin: 50px auto;
+    }
+
+  
+    small {
+        color: #e74c3c;
+        position: relative;
+        bottom: 0;
+        left: 0;
+        visibility: hidden;
+        font-size: medium;
+    }
+
+    .error small {
+        visibility: visible;
+    }
+
+    .success input {
+        border-color: #2ecc71;
+    }
+    .success textarea {
+        border-color: #2ecc71;
+    }
+
+    h1 {
+        text-align: center;
+        color: #4a3088;
+    }
+
+    .inline {
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    .align-right {
+        text-align: right;
+    }
+
+    .feedback-input {
+        color: black;
+        font-family: Helvetica, Arial, sans-serif;
+        font-weight: 500;
+        font-size: 18px;
+        border-radius: 5px;
+        line-height: 22px;
+        background-color: transparent;
+        border: 2px solid #4a3088;
+        transition: all 0.3s;
+        padding: 13px;
+        margin-bottom: 15px;
+        width: 100%;
+        box-sizing: border-box;
+        outline: 0;
+    }
+
+    .container {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 22px;
+        color: aliceblue;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    /* Hide the browser's default checkbox */
+    .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+
+    .feedback-input:focus {
+        border: 2px solid #575068;
+    }
+
+    textarea {
+        height: 150px;
+        line-height: 150%;
+        resize: vertical;
+    }
+
+    [type="submit"] {
+        font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+        width: 30%;
+
+        background:#4a3088;
+        border-radius: 5px;
+        border: 0;
+        cursor: pointer;
+        color: white;
+        font-size: 24px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        transition: all 0.3s;
+        margin-top: -4px;
+        font-weight: 700;
+    }
+
+    [type="submit"]:hover {
+        background: #38216e;
+    }
+
+    [type="reset"] {
+        font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+        width: 30%;
+
+        background:#4a3088;
+        border-radius: 5px;
+        border: 0;
+        cursor: pointer;
+        color: white;
+        font-size: 24px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        transition: all 0.3s;
+        margin-top: -4px;
+        font-weight: 700;
+    }
+
+    [type="reset"]:hover {
+        background:#38216e;
+    }
+
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .container:hover input~.checkmark {
+        background-color: #ccc;
+    }
+
+    /* When the checkbox is checked, add a blue background */
+    .container input:checked~.checkmark {
+        background-color:#4a3088;
+    }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    /* Show the checkmark when checked */
+    .container input:checked~.checkmark:after {
+        display: block;
+    }
+
+    /* Style the checkmark/indicator */
+    .container .checkmark:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+</style>
